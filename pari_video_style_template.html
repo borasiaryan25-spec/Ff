@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Little Surprise for Pari</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080505;color:#f7d78b;font-family:Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden}
+#stars{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.star{position:absolute;color:#f5c65b;text-shadow:0 0 7px #ffc64c,0 0 16px #e7a12c;animation:twinkle 2.2s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.22;transform:scale(.75)}to{opacity:1;transform:scale(1.15)}}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,#140400 100%);z-index:0}
+main{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:25px 16px 60px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.top{font-size:12px;letter-spacing:2px;color:#c99b50;text-transform:uppercase;margin-top:12px}
+h1{font-size:clamp(27px,7vw,38px);text-align:center;margin:14px 0 8px;color:#f9d782;text-shadow:0 0 15px #a96a20}
+.sub{font-size:14px;color:#d2b982;text-align:center;line-height:1.6;max-width:330px}
+.card{width:100%;border:1px solid #8d6128;border-radius:16px;background:linear-gradient(160deg,#1c0d0b,#100706 65%,#24100b);box-shadow:0 0 30px #a66c1c22,inset 0 0 20px #c58b2510;padding:20px;text-align:center;margin:18px 0}
+.card h2{font-size:22px;margin:0 0 12px;color:#f8d889}
+.card p{color:#e3c78b;font-size:14px;line-height:1.7}
+button{cursor:pointer;color:#f9e4b0;background:linear-gradient(#4a2516,#24110d);border:1px solid #b7853e;border-radius:30px;padding:11px 20px;font-family:inherit;font-size:14px;box-shadow:0 0 12px #d79c3820;transition:.2s;margin:6px}
+button:hover{background:linear-gradient(#6a351d,#321710);transform:translateY(-2px);box-shadow:0 0 15px #e6b04c55}
+.gift{font-size:90px;display:block;filter:drop-shadow(0 0 18px #e2a337);animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.hidden{display:none!important}.screen{width:100%;animation:fade .5s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.photo{width:min(240px,80%);height:280px;border-radius:12px;margin:14px auto;background:linear-gradient(135deg,#2c1612,#5c301d);border:1px solid #bd8740;display:flex;align-items:center;justify-content:center;color:#c9a36b;box-shadow:0 0 24px #c08b3215;font-size:14px;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover}
+.code{font-size:26px;letter-spacing:12px;margin:15px;color:#ffe5a2;min-height:34px}
+.keys{display:grid;grid-template-columns:repeat(3,65px);justify-content:center;gap:8px}
+.keys button{border-radius:12px;margin:0;padding:12px;font-size:18px}
+.wish{border:1px solid #8e622d;border-radius:12px;padding:13px;margin:10px 0;background:#1a0b09}
+.footer{font-size:11px;color:#9b7946;text-align:center;margin-top:auto;padding-top:24px;letter-spacing:1px}
+input{background:#160907;border:1px solid #9d7135;color:#ffe7ad;padding:12px;border-radius:12px;width:90%;font-family:inherit;text-align:center}
+</style></head><body>
+<div id="stars"></div>
+<main>
+<div class="top">A little corner of happiness</div>
+<section id="welcome" class="screen">
+<h1>A Little Surprise<br>for Pari ✨</h1><p class="sub">Some little moments, smiles and surprises have been gathered just for you.</p>
+<div class="card"><span class="gift">🎁</span><h2>A surprise awaits you...</h2><p>Ready to open a tiny world of joy?</p><button onclick="show('lock')">Open the Surprise ✨</button></div>
+</section>
+<section id="lock" class="screen hidden">
+<h1>Secret Surprise 🔐</h1><p class="sub">Enter the little code to continue.</p><div class="card"><div id="dots" class="code">••••</div><div class="keys">
+<button onclick="digit(1)">1</button><button onclick="digit(2)">2</button><button onclick="digit(3)">3</button><button onclick="digit(4)">4</button><button onclick="digit(5)">5</button><button onclick="digit(6)">6</button><button onclick="digit(7)">7</button><button onclick="digit(8)">8</button><button onclick="digit(9)">9</button><button onclick="clearCode()">⌫</button><button onclick="digit(0)">0</button><button onclick="unlock()">✓</button>
+</div><p id="lockMsg">Use the demo code <b>2025</b></p></div></section>
+<section id="memories" class="screen hidden">
+<h1>Little Memories 🌟</h1><p class="sub">A place for photos and moments you want to keep.</p>
+<div class="card"><div class="photo" id="photo1">Photo placeholder<br>replace with your image</div><p>Some moments deserve their own little spotlight.</p><button onclick="show('wishes')">Next ✨</button></div>
+</section>
+<section id="wishes" class="screen hidden">
+<h1>Pop the Wishes ✨</h1><p class="sub">Tap a wish to reveal a little message.</p>
+<div class="card"><div class="wish" onclick="this.innerHTML='🌼 May today bring you a small reason to smile.'">🌟 Wish 1 — tap to open</div><div class="wish" onclick="this.innerHTML='🍀 May good things find you in unexpected ways.'">🌟 Wish 2 — tap to open</div><div class="wish" onclick="this.innerHTML='🦋 Keep being your wonderfully unique self.'">🌟 Wish 3 — tap to open</div><button onclick="show('timer')">Next</button></div>
+</section>
+<section id="timer" class="screen hidden">
+<h1>A Moment Just for You ⏳</h1><p class="sub">Take a breath, and let this little moment be yours.</p>
+<div class="card"><div id="count" style="font-size:48px;color:#f4d587">10</div><button onclick="startTimer()">Start a little pause</button><button onclick="show('birthday')">Skip ✨</button></div>
+</section>
+<section id="birthday" class="screen hidden">
+<h1>A Tiny Celebration 🎂</h1><p class="sub">A little celebration of you, Pari!</p>
+<div class="card"><div style="font-size:65px">🎂</div><div style="font-size:30px;margin:12px">🌟 100% Wonderful 🌟</div><p>Keep collecting small joys, one day at a time.</p><button onclick="show('letter')">One last surprise ✨</button></div>
+</section>
+<section id="letter" class="screen hidden">
+<h1>A Little Note 💌</h1><div class="card"><p style="text-align:left">Hey Pari,<br><br>This little page is just a reminder that you deserve kindness, laughter and plenty of peaceful moments. On days that feel heavy, take your time. On good days, enjoy every bit of them. And whenever you need a little distraction, there's always a joke or tiny game waiting here.<br><br>Keep smiling when you can, and be gentle with yourself. 🌷</p><button onclick="show('final')">Finish ✨</button></div>
+</section>
+<section id="final" class="screen hidden">
+<h1>Keep Smiling, Pari! 🌙</h1><div class="card"><div style="font-size:60px">🌠</div><p>Thank you for visiting this little universe of surprises.</p><button onclick="show('welcome')">Start Again</button></div>
+</section>
+<div class="footer">MADE OF LITTLE STARS ✦ NO MUSIC</div>
+</main>
+<script>
+let current='welcome',pin='';
+function show(id){document.getElementById(current).classList.add('hidden');document.getElementById(id).classList.remove('hidden');current=id;pin='';if(id==='lock')updateDots();window.scrollTo({top:0,behavior:'smooth'})}
+function digit(n){if(pin.length<4){pin+=n;updateDots()}if(pin.length===4)unlock()}
+function updateDots(){document.getElementById('dots').textContent=pin.padEnd(4,'•')}
+function clearCode(){pin=pin.slice(0,-1);updateDots()}
+function unlock(){if(pin==='2025'){show('memories')}else{document.getElementById('lockMsg').textContent='Try the demo code 2025';pin='';updateDots()}}
+let t;
+function startTimer(){clearInterval(t);let n=10;document.getElementById('count').textContent=n;t=setInterval(()=>{n--;document.getElementById('count').textContent=n;if(n<=0){clearInterval(t);document.getElementById('count').textContent='✨'}},1000)}
+let starBox=document.getElementById('stars');for(let i=0;i<100;i++){let s=document.createElement('span');s.className='star';s.textContent=['✦','✧','·','★'][Math.floor(Math.random()*4)];s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.fontSize=(7+Math.random()*16)+'px';s.style.animationDelay=Math.random()*3+'s';starBox.appendChild(s)}
+</script></body></html>
